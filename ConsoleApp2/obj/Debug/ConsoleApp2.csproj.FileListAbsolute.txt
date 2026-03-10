@@ -1,7 +1,0 @@
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\bin\Debug\ConsoleApp2.exe.config
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\bin\Debug\ConsoleApp2.exe
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\bin\Debug\ConsoleApp2.pdb
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\obj\Debug\ConsoleApp2.csproj.AssemblyReference.cache
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\obj\Debug\ConsoleApp2.csproj.CoreCompileInputs.cache
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\obj\Debug\ConsoleApp2.exe
-H:\УП\лаба1\ConsoleApp1\ConsoleApp2\obj\Debug\ConsoleApp2.pdb
