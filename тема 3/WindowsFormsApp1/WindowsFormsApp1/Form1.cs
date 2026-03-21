@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             this.KeyPreview = true;
-            this.KeyDown += Form1_KeyDown;
+            //this.KeyDown += Form1_KeyDown;
 
             timer1.Interval = 50;
             timer1.Tick += timer1_Tick;
@@ -42,10 +42,10 @@ namespace WindowsFormsApp1
         {
 
         }
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            Application.Exit();
-        }
+        //private void Form1_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    Application.Exit();
+        //}
 
         private void timer1_Tick(object sender, EventArgs e)
         {
