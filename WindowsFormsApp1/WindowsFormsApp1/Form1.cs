@@ -37,11 +37,16 @@ namespace WindowsFormsApp1
 
                 // Исключение если X вне диапазона
                 if (x <= -1 || x > 1)
-                    throw new Exception("X должен быть в диапазоне -1 < X ≤ 1");
+                    throw new ArgumentOutOfRangeException("X должен быть в диапазоне -1 < X ≤ 1");
 
                 // Исключение если точность неверная
                 if (eps <= 0 || eps >= 1)
-                    throw new Exception("Точность должна быть 0 < ε < 1");
+                    throw new ArgumentOutOfRangeException("Точность должна быть 0 < ε < 1");
+
+                if (x == 0)
+                {
+                    throw new InvalidOperationException("Демонстрационное исключение: X не может быть равен 0 для данного теста.");
+                }
 
                 double term = x;
                 double sum = term;
@@ -61,9 +66,17 @@ namespace WindowsFormsApp1
                 label5.Text = "Сумма ряда = " + sum.ToString();
                 label6.Text = "Количество членов ряда = " + n.ToString();
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                MessageBox.Show("Ошибка диапазона: " + ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show("Демонстрационная ошибка: " + ex.Message);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка: " + ex.Message);
+                MessageBox.Show("Общая ошибка: " + ex.Message);
             }
         }
 
@@ -85,6 +98,11 @@ namespace WindowsFormsApp1
             button1.Enabled =
                 !string.IsNullOrWhiteSpace(textBox2.Text) &&
                 !string.IsNullOrWhiteSpace(textBox1.Text);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // hello
         }
     }
 }

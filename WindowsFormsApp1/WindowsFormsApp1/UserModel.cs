@@ -8,16 +8,17 @@ using Supabase.Postgrest.Models;
 
 namespace WindowsFormsApp1
 {
-    [Table("praktDaria")] 
+    [Table("praktDaria")]
     public class UserModel : BaseModel
     {
         [PrimaryKey("username")]  
-        public int Id { get; set; }
-
         [Column("username")]
         public string Name { get; set; }
 
-        [Column("password")] 
+        [Column("password")]
         public string Password { get; set; }
+
+        [Column("avatar_url")] //поле для аватарки
+        public string AvatarUrl { get; set; }
     }
 }
