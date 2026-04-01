@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tests>
+	<theme name="Архитектура СПб">
+
+		<level number="1">
+			<question text="Как называется этот дворец?" img="hermitage.jpg">
+				<answer right="yes">Эрмитаж</answer>
+				<answer right="no">Петергоф</answer>
+				<answer right="no">Казанский собор</answer>
+				<answer right="no">Зимний дворец</answer>
+			</question>
+		</level>
+
+		<level number="2">
+			<question text="Кто архитектор Зимнего дворца?" img="winter.jpg">
+				<answer right="yes">Растрелли</answer>
+				<answer right="no">Росси</answer>
+				<answer right="no">Монферран</answer>
+				<answer right="no">Трезини</answer>
+			</question>
+		</level>
+
+		<level number="3">
+			<question text="Кто архитектор Казанского собора?" img="kazan.jpg">
+				<answer right="yes">Воронихин</answer>
+				<answer right="no">Растрелли</answer>
+				<answer right="no">Росси</answer>
+				<answer right="no">Монферран</answer>
+			</question>
+		</level>
+
+	</theme>
+</tests>
