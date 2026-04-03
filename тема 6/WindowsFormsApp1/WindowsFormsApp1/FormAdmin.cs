@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
-using System.Xml;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
@@ -9,43 +11,84 @@ namespace WindowsFormsApp1
         public FormAdmin()
         {
             InitializeComponent();
+
+            comboLevel.Items.Add("1");
+            comboLevel.Items.Add("2");
+            comboLevel.Items.Add("3");
+
+            comboRight.Items.Add("1");
+            comboRight.Items.Add("2");
+            comboRight.Items.Add("3");
+            comboRight.Items.Add("4");
         }
+
 
         private void FormAdmin_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
-            XmlWriter writer = XmlWriter.Create("questions.xml");
+            try
+            {
+                string path = Application.StartupPath + "\\questions.xml";
 
-            writer.WriteStartDocument();
-            writer.WriteStartElement("tests");
+                XDocument doc = XDocument.Load(path);
 
-            writer.WriteStartElement("theme");
-            writer.WriteAttributeString("name", "Архитектура");
+                var level = doc.Root
+                               .Element("theme")
+                               .Elements("level")
+                               .FirstOrDefault(x => x.Attribute("number").Value == comboLevel.Text);
 
-            writer.WriteStartElement("level");
-            writer.WriteAttributeString("number", "1");
+                if (level == null)
+                {
+                    MessageBox.Show("Уровень не найден!");
+                    return;
+                }
 
-            writer.WriteStartElement("question");
-            writer.WriteAttributeString("text", textBoxQuestion.Text);
-            writer.WriteAttributeString("img", textBoxImage.Text);
+                XElement newQuestion =
+                    new XElement("question",
+                        new XAttribute("text", textBoxQuestion.Text),
+                        new XAttribute("img", textBoxImage.Text),
 
-            writer.WriteStartElement("answer");
-            writer.WriteAttributeString("right", "yes");
-            writer.WriteString(textBoxAnswer.Text);
-            writer.WriteEndElement();
+                        new XElement("answer", new XAttribute("right", comboRight.Text == "1" ? "yes" : "no"), textBox1.Text),
+                        new XElement("answer", new XAttribute("right", comboRight.Text == "2" ? "yes" : "no"), textBox2.Text),
+                        new XElement("answer", new XAttribute("right", comboRight.Text == "3" ? "yes" : "no"), textBox3.Text),
+                        new XElement("answer", new XAttribute("right", comboRight.Text == "4" ? "yes" : "no"), textBox4.Text)
+                    );
 
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndElement();
+                level.Add(newQuestion);
 
-            writer.Close();
+                doc.Save(path);
 
-            MessageBox.Show("Вопрос добавлен");
+                MessageBox.Show("Вопрос добавлен в XML!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+
+        void ClearFields()
+        {
+            textBoxQuestion.Text = "";
+            textBoxImage.Text = "";
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            comboRight.Text = "";
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            FormMenu f = new FormMenu();
+            f.Show();
+            this.Hide();
         }
     }
 }

@@ -19,6 +19,13 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
+            label1.BringToFront();
+            radioButton1.BringToFront();
+            radioButton2.BringToFront();
+            radioButton3.BringToFront();
+            radioButton4.BringToFront();
+            button1.BringToFront();
+
             LoadLevel();
 
             timer.Interval = 1000;
@@ -27,6 +34,7 @@ namespace WindowsFormsApp1
 
             ShowQuestion();
         }
+
         private void FormTest_Load(object sender, EventArgs e)
         {
 
@@ -38,11 +46,10 @@ namespace WindowsFormsApp1
 
         void LoadLevel()
         {
-            questions = XmlLoader.Load("questions.xml", level)
-                .OrderBy(x => Guid.NewGuid())
-                .Take(5)
-                .ToList();
+            questions = XmlLoader.Load("questions.xml", level);
+            current = 0;
         }
+
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -55,17 +62,18 @@ namespace WindowsFormsApp1
 
         void ShowQuestion()
         {
-            radioButton1.Checked = false;
-            radioButton2.Checked = false;
-            radioButton3.Checked = false;
-            radioButton4.Checked = false;
-
             var q = questions[current];
 
             label1.Text = q.Text;
 
-            if (System.IO.File.Exists(q.Image))
-                pictureBox1.Image = Image.FromFile(q.Image);
+            try
+            {
+                pictureBox1.Image = Image.FromFile(Application.StartupPath + "\\" + q.Image);
+            }
+            catch
+            {
+                pictureBox1.Image = null;
+            }
 
             radioButton1.Text = q.Answers[0];
             radioButton2.Text = q.Answers[1];
@@ -73,7 +81,9 @@ namespace WindowsFormsApp1
             radioButton4.Text = q.Answers[3];
         }
 
-        private void buttonNext_Click(object sender, EventArgs e)
+
+
+        private void button1_Click(object sender, EventArgs e)
         {
             int selected = -1;
 
@@ -128,6 +138,26 @@ namespace WindowsFormsApp1
             r.Score = score;
             r.Show();
             this.Hide();
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

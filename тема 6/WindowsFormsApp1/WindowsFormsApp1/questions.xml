@@ -2,31 +2,103 @@
 <tests>
 	<theme name="Архитектура СПб">
 
+		<!-- УРОВЕНЬ 1 -->
 		<level number="1">
+
 			<question text="Как называется этот дворец?" img="hermitage.jpg">
 				<answer right="yes">Эрмитаж</answer>
 				<answer right="no">Петергоф</answer>
-				<answer right="no">Казанский собор</answer>
+				<answer right="no">Гатчина</answer>
+				<answer right="no">Павловск</answer>
+			</question>
+
+			<question text="Как называется этот дворец?" img="peterhof.jpg">
+				<answer right="no">Эрмитаж</answer>
+				<answer right="no">Кремль</answer>
+				<answer right="yes">Петергоф</answer>
 				<answer right="no">Зимний дворец</answer>
 			</question>
+
+			<question text="Как называется этот собор?" img="isaac.jpg">
+				<answer right="no">Казанский собор</answer>
+				<answer right="yes">Исаакиевский собор</answer>
+				<answer right="no">Смольный собор</answer>
+				<answer right="no">Троицкий собор</answer>
+			</question>
+
+			<question text="Как называется этот собор?" img="kazan.jpg">
+				<answer right="no">Исаакиевский</answer>
+				<answer right="no">Смольный</answer>
+				<answer right="no">Петропавловский</answer>
+				<answer right="yes">Казанский собор</answer>
+			</question>
+
 		</level>
 
+		<!-- УРОВЕНЬ 2 -->
 		<level number="2">
+
 			<question text="Кто архитектор Зимнего дворца?" img="winter.jpg">
 				<answer right="yes">Растрелли</answer>
 				<answer right="no">Росси</answer>
 				<answer right="no">Монферран</answer>
 				<answer right="no">Трезини</answer>
 			</question>
-		</level>
 
-		<level number="3">
-			<question text="Кто архитектор Казанского собора?" img="kazan.jpg">
+			<question text="Кто архитектор Исаакиевского собора?" img="isaac2.jpg">
+				<answer right="no">Растрелли</answer>
+				<answer right="no">Росси</answer>
+				<answer right="no">Воронихин</answer>
+				<answer right="yes">Монферран</answer>
+			</question>
+
+			<question text="Кто архитектор Казанского собора?" img="kazan2.jpg">
+				<answer right="no">Монферран</answer>
 				<answer right="yes">Воронихин</answer>
 				<answer right="no">Растрелли</answer>
 				<answer right="no">Росси</answer>
-				<answer right="no">Монферран</answer>
 			</question>
+
+			<question text="Кто архитектор Смольного собора?" img="smolny.jpg">
+				<answer right="no">Росси</answer>
+				<answer right="no">Монферран</answer>
+				<answer right="yes">Растрелли</answer>
+				<answer right="no">Трезини</answer>
+			</question>
+
+		</level>
+
+		<!-- УРОВЕНЬ 3 -->
+		<level number="3">
+
+			<question text="В каком стиле построен Зимний дворец?" img="hermitage.jpg">
+				<answer right="yes">Барокко</answer>
+				<answer right="no">Готика</answer>
+				<answer right="no">Модерн</answer>
+				<answer right="no">Классицизм</answer>
+			</question>
+
+			<question text="Как называется колонна на Дворцовой площади?" img="column.jpg">
+				<answer right="no">Колонна Победы</answer>
+				<answer right="yes">Александровская колонна</answer>
+				<answer right="no">Колонна Славы</answer>
+				<answer right="no">Императорская колонна</answer>
+			</question>
+
+			<question text="Как называется музей в Зимнем дворце?" img="hermitage.jpg">
+				<answer right="no">Русский музей</answer>
+				<answer right="no">Лувр</answer>
+				<answer right="yes">Эрмитаж</answer>
+				<answer right="no">Метрополитен</answer>
+			</question>
+
+			<question text="Как называется главный проспект города?" img="nevsky.jpg">
+				<answer right="no">Ленинский проспект</answer>
+				<answer right="no">Московский проспект</answer>
+				<answer right="no">Центральный проспект</answer>
+				<answer right="yes">Невский проспект</answer>
+			</question>
+
 		</level>
 
 	</theme>

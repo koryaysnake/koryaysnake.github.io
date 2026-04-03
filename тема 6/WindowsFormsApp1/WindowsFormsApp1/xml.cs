@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 
             while (reader.Read())
             {
-                if (reader.Name == "level")
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "level")
                 {
                     if (reader.GetAttribute("number") == levelNumber.ToString())
                         correctLevel = true;
@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
                         correctLevel = false;
                 }
 
-                if (reader.Name == "question" && correctLevel)
+                if (reader.NodeType == XmlNodeType.Element && reader.Name == "question" && correctLevel)
                 {
                     questoin q = new questoin();
                     q.Text = reader.GetAttribute("text");
@@ -33,20 +33,24 @@ namespace WindowsFormsApp1
 
                     while (reader.Read())
                     {
-                        if (reader.Name == "answer")
+                        if (reader.NodeType == XmlNodeType.Element && reader.Name == "answer")
                         {
-                            if (reader.GetAttribute("right") == "yes")
-                                q.RightAnswer = i;
+                            string right = reader.GetAttribute("right");
 
-                            reader.Read();
+                            reader.Read(); // текст ответа
 
                             if (i < 4)
+                            {
                                 q.Answers[i] = reader.Value;
 
-                            i++;
+                                if (right == "yes")
+                                    q.RightAnswer = i;
+
+                                i++;
+                            }
                         }
 
-                        if (reader.Name == "question" && reader.NodeType == XmlNodeType.EndElement)
+                        if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "question")
                             break;
                     }
 
