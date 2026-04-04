@@ -48,19 +48,15 @@
             // comboLevel
             // 
             this.comboLevel.FormattingEnabled = true;
-            this.comboLevel.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.comboLevel.Location = new System.Drawing.Point(302, 77);
+            this.comboLevel.Location = new System.Drawing.Point(115, 77);
             this.comboLevel.Name = "comboLevel";
-            this.comboLevel.Size = new System.Drawing.Size(121, 24);
+            this.comboLevel.Size = new System.Drawing.Size(308, 24);
             this.comboLevel.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(299, 58);
+            this.label2.Location = new System.Drawing.Point(176, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 16);
             this.label2.TabIndex = 3;
@@ -138,11 +134,6 @@
             // comboRight
             // 
             this.comboRight.FormattingEnabled = true;
-            this.comboRight.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4"});
             this.comboRight.Location = new System.Drawing.Point(647, 290);
             this.comboRight.Name = "comboRight";
             this.comboRight.Size = new System.Drawing.Size(121, 24);
@@ -174,7 +165,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1224, 678);
+            this.ClientSize = new System.Drawing.Size(1131, 573);
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.comboRight);
