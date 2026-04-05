@@ -97,14 +97,14 @@
             // моиРезультатыToolStripMenuItem
             // 
             this.моиРезультатыToolStripMenuItem.Name = "моиРезультатыToolStripMenuItem";
-            this.моиРезультатыToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.моиРезультатыToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
             this.моиРезультатыToolStripMenuItem.Text = "Мои результаты";
             this.моиРезультатыToolStripMenuItem.Click += new System.EventHandler(this.показатьРезультатыToolStripMenuItem_Click);
             // 
             // выходToolStripMenuItem
             // 
             this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            this.выходToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
             this.выходToolStripMenuItem.Text = "Выход";
             this.выходToolStripMenuItem.Click += new System.EventHandler(this.выходToolStripMenuItem_Click);
             // 
@@ -119,7 +119,7 @@
             // цветБочекToolStripMenuItem
             // 
             this.цветБочекToolStripMenuItem.Name = "цветБочекToolStripMenuItem";
-            this.цветБочекToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.цветБочекToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
             this.цветБочекToolStripMenuItem.Text = "Цвет бочек";
             this.цветБочекToolStripMenuItem.Click += new System.EventHandler(this.цветБочекToolStripMenuItem_Click);
             // 
@@ -135,14 +135,14 @@
             // правилаToolStripMenuItem
             // 
             this.правилаToolStripMenuItem.Name = "правилаToolStripMenuItem";
-            this.правилаToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.правилаToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
             this.правилаToolStripMenuItem.Text = "Правила";
             this.правилаToolStripMenuItem.Click += new System.EventHandler(this.правилаToolStripMenuItem_Click);
             // 
             // оПрограммеToolStripMenuItem
             // 
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
             // 
             // lblPlayer
@@ -160,7 +160,7 @@
             this.gameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.69128F));
             this.gameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.30872F));
             this.gameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.gameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.gameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.gameBoard.Controls.Add(this.btn16, 3, 3);
             this.gameBoard.Controls.Add(this.btn15, 2, 3);
             this.gameBoard.Controls.Add(this.btn14, 1, 3);
@@ -193,10 +193,10 @@
             this.btn16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn16.Location = new System.Drawing.Point(285, 317);
+            this.btn16.Location = new System.Drawing.Point(284, 317);
             this.btn16.Name = "btn16";
             this.btn16.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn16.Size = new System.Drawing.Size(95, 105);
+            this.btn16.Size = new System.Drawing.Size(96, 105);
             this.btn16.TabIndex = 15;
             this.btn16.Text = "15";
             this.btn16.UseVisualStyleBackColor = false;
@@ -207,7 +207,7 @@
             this.btn15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn15.Location = new System.Drawing.Point(195, 317);
+            this.btn15.Location = new System.Drawing.Point(194, 317);
             this.btn15.Name = "btn15";
             this.btn15.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btn15.Size = new System.Drawing.Size(84, 105);
@@ -224,7 +224,7 @@
             this.btn14.Location = new System.Drawing.Point(106, 317);
             this.btn14.Name = "btn14";
             this.btn14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn14.Size = new System.Drawing.Size(83, 105);
+            this.btn14.Size = new System.Drawing.Size(82, 105);
             this.btn14.TabIndex = 13;
             this.btn14.Text = "13";
             this.btn14.UseVisualStyleBackColor = false;
@@ -249,10 +249,10 @@
             this.btn12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn12.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn12.Location = new System.Drawing.Point(285, 208);
+            this.btn12.Location = new System.Drawing.Point(284, 208);
             this.btn12.Name = "btn12";
             this.btn12.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn12.Size = new System.Drawing.Size(95, 103);
+            this.btn12.Size = new System.Drawing.Size(96, 103);
             this.btn12.TabIndex = 11;
             this.btn12.Text = "11";
             this.btn12.UseVisualStyleBackColor = false;
@@ -263,7 +263,7 @@
             this.btn11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn11.Location = new System.Drawing.Point(195, 208);
+            this.btn11.Location = new System.Drawing.Point(194, 208);
             this.btn11.Name = "btn11";
             this.btn11.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btn11.Size = new System.Drawing.Size(84, 103);
@@ -280,7 +280,7 @@
             this.btn10.Location = new System.Drawing.Point(106, 208);
             this.btn10.Name = "btn10";
             this.btn10.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn10.Size = new System.Drawing.Size(83, 103);
+            this.btn10.Size = new System.Drawing.Size(82, 103);
             this.btn10.TabIndex = 9;
             this.btn10.Text = "9";
             this.btn10.UseVisualStyleBackColor = false;
@@ -305,10 +305,10 @@
             this.btn8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn8.Location = new System.Drawing.Point(285, 103);
+            this.btn8.Location = new System.Drawing.Point(284, 103);
             this.btn8.Name = "btn8";
             this.btn8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn8.Size = new System.Drawing.Size(95, 99);
+            this.btn8.Size = new System.Drawing.Size(96, 99);
             this.btn8.TabIndex = 7;
             this.btn8.Text = "7";
             this.btn8.UseVisualStyleBackColor = false;
@@ -319,7 +319,7 @@
             this.btn7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn7.Location = new System.Drawing.Point(195, 103);
+            this.btn7.Location = new System.Drawing.Point(194, 103);
             this.btn7.Name = "btn7";
             this.btn7.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btn7.Size = new System.Drawing.Size(84, 99);
@@ -336,7 +336,7 @@
             this.btn6.Location = new System.Drawing.Point(106, 103);
             this.btn6.Name = "btn6";
             this.btn6.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn6.Size = new System.Drawing.Size(83, 99);
+            this.btn6.Size = new System.Drawing.Size(82, 99);
             this.btn6.TabIndex = 5;
             this.btn6.Text = "5";
             this.btn6.UseVisualStyleBackColor = false;
@@ -361,10 +361,10 @@
             this.btn4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn4.Location = new System.Drawing.Point(285, 3);
+            this.btn4.Location = new System.Drawing.Point(284, 3);
             this.btn4.Name = "btn4";
             this.btn4.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn4.Size = new System.Drawing.Size(95, 94);
+            this.btn4.Size = new System.Drawing.Size(96, 94);
             this.btn4.TabIndex = 3;
             this.btn4.Text = "3";
             this.btn4.UseVisualStyleBackColor = false;
@@ -375,7 +375,7 @@
             this.btn3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btn3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn3.Location = new System.Drawing.Point(195, 3);
+            this.btn3.Location = new System.Drawing.Point(194, 3);
             this.btn3.Name = "btn3";
             this.btn3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.btn3.Size = new System.Drawing.Size(84, 94);
@@ -392,7 +392,7 @@
             this.btn2.Location = new System.Drawing.Point(106, 3);
             this.btn2.Name = "btn2";
             this.btn2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btn2.Size = new System.Drawing.Size(83, 94);
+            this.btn2.Size = new System.Drawing.Size(82, 94);
             this.btn2.TabIndex = 1;
             this.btn2.Text = "1";
             this.btn2.UseVisualStyleBackColor = false;
@@ -422,9 +422,9 @@
             this.micePanel.Controls.Add(this.label4);
             this.micePanel.Controls.Add(this.label2);
             this.micePanel.Controls.Add(this.label3);
-            this.micePanel.Location = new System.Drawing.Point(42, 190);
+            this.micePanel.Location = new System.Drawing.Point(46, 109);
             this.micePanel.Name = "micePanel";
-            this.micePanel.Size = new System.Drawing.Size(578, 142);
+            this.micePanel.Size = new System.Drawing.Size(560, 263);
             this.micePanel.TabIndex = 3;
             // 
             // btnMouse4
@@ -432,7 +432,7 @@
             this.btnMouse4.BackColor = System.Drawing.Color.Silver;
             this.btnMouse4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMouse4.ForeColor = System.Drawing.Color.Green;
-            this.btnMouse4.Location = new System.Drawing.Point(477, 52);
+            this.btnMouse4.Location = new System.Drawing.Point(19, 208);
             this.btnMouse4.Name = "btnMouse4";
             this.btnMouse4.Size = new System.Drawing.Size(48, 37);
             this.btnMouse4.TabIndex = 18;
@@ -443,7 +443,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 20);
+            this.label1.Location = new System.Drawing.Point(84, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 19);
             this.label1.TabIndex = 8;
@@ -454,7 +454,7 @@
             this.btnMouse3.BackColor = System.Drawing.Color.Silver;
             this.btnMouse3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMouse3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.btnMouse3.Location = new System.Drawing.Point(326, 52);
+            this.btnMouse3.Location = new System.Drawing.Point(19, 152);
             this.btnMouse3.Name = "btnMouse3";
             this.btnMouse3.Size = new System.Drawing.Size(48, 37);
             this.btnMouse3.TabIndex = 17;
@@ -467,7 +467,7 @@
             this.btnMouse1.BackColor = System.Drawing.Color.Silver;
             this.btnMouse1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMouse1.ForeColor = System.Drawing.Color.Black;
-            this.btnMouse1.Location = new System.Drawing.Point(27, 52);
+            this.btnMouse1.Location = new System.Drawing.Point(19, 31);
             this.btnMouse1.Name = "btnMouse1";
             this.btnMouse1.Size = new System.Drawing.Size(48, 37);
             this.btnMouse1.TabIndex = 15;
@@ -480,7 +480,7 @@
             this.btnMouse2.BackColor = System.Drawing.Color.Silver;
             this.btnMouse2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnMouse2.ForeColor = System.Drawing.Color.Red;
-            this.btnMouse2.Location = new System.Drawing.Point(177, 52);
+            this.btnMouse2.Location = new System.Drawing.Point(19, 92);
             this.btnMouse2.Name = "btnMouse2";
             this.btnMouse2.Size = new System.Drawing.Size(48, 37);
             this.btnMouse2.TabIndex = 16;
@@ -491,7 +491,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(463, 20);
+            this.label4.Location = new System.Drawing.Point(84, 217);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(62, 19);
             this.label4.TabIndex = 11;
@@ -500,7 +500,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(173, 20);
+            this.label2.Location = new System.Drawing.Point(84, 101);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 19);
             this.label2.TabIndex = 9;
@@ -509,12 +509,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(322, 20);
+            this.label3.Location = new System.Drawing.Point(84, 161);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 19);
             this.label3.TabIndex = 10;
             this.label3.Text = "мышь 3";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnCheckGuess
             // 

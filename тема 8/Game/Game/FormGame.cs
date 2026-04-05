@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Game
@@ -16,84 +11,243 @@ namespace Game
     {
         string player;
         int poisonedBarrel;
-        bool[,] tests = new bool[4, 16];  // [мышка, бочка]
+        bool[,] tests = new bool[4, 16];
         bool[] miceAlive = new bool[4];
         int selectedMouse = 0;
         bool gameActive = true;
+        bool testsCompleted = false;
         List<GameResult> results = new List<GameResult>();
 
+        // Для анимации
+        Timer animationTimer;
+        int currentMouse = -1;
+        int currentBarrelPos = 0;
+        List<int>[] barrelsToTest;
+        int animStep = 0;
+        Point startP;
+        Point endP;
+        bool goToBarrel = true;
+
+        Button[] barrels;
+        Button[] miceButtons;
 
         public FormGame(string login)
         {
             InitializeComponent();
             player = login;
             lblPlayer.Text = "Игрок: " + player;
+
+            barrels = new Button[] { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8,
+                                     btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16 };
+            miceButtons = new Button[] { btnMouse1, btnMouse2, btnMouse3, btnMouse4 };
+
+            barrelsToTest = new List<int>[4];
+            for (int i = 0; i < 4; i++)
+                barrelsToTest[i] = new List<int>();
+
+            animationTimer = new Timer();
+            animationTimer.Interval = 15;
+            animationTimer.Tick += AnimationTick;
+
             NewGame();
             LoadResults();
         }
 
-        void NewGame()
+        private void AnimationTick(object sender, EventArgs e)
+        {
+            if (currentMouse == -1)
+            {
+                animationTimer.Stop();
+                return;
+            }
+
+            Button mouse = miceButtons[currentMouse];
+
+            if (goToBarrel)
+            {
+                int newX = mouse.Location.X + (endP.X - startP.X) * animStep / 20;
+                int newY = mouse.Location.Y + (endP.Y - startP.Y) * animStep / 20;
+                mouse.Location = new Point(newX, newY);
+                animStep++;
+
+                if (animStep >= 20)
+                {
+                    mouse.Location = endP;
+                    int barrelNum = barrelsToTest[currentMouse][currentBarrelPos];
+                    barrels[barrelNum].BackColor = Color.Orange;
+                    Refresh();
+                    System.Threading.Thread.Sleep(250);
+
+                    if (tests[currentMouse, barrelNum])
+                        barrels[barrelNum].BackColor = Color.LightGreen;
+                    else
+                        barrels[barrelNum].BackColor = SystemColors.Control;
+                    Refresh();
+
+                    System.Threading.Thread.Sleep(150);
+                    goToBarrel = false;
+                    animStep = 0;
+                    startP = mouse.Location;
+                    endP = new Point(10, 10 + currentMouse * 60);
+                }
+            }
+            else
+            {
+                int newX = mouse.Location.X + (endP.X - startP.X) * animStep / 20;
+                int newY = mouse.Location.Y + (endP.Y - startP.Y) * animStep / 20;
+                mouse.Location = new Point(newX, newY);
+                animStep++;
+
+                if (animStep >= 20)
+                {
+                    mouse.Location = endP;
+                    goToBarrel = true;
+                    animStep = 0;
+                    currentBarrelPos++;
+
+                    if (currentBarrelPos >= barrelsToTest[currentMouse].Count)
+                    {
+                        int finished = currentMouse;
+                        currentMouse = -1;
+
+                        // Ищем следующую мышку
+                        for (int m = finished + 1; m < 4; m++)
+                        {
+                            if (barrelsToTest[m].Count > 0)
+                            {
+                                StartAnimationForMouse(m);
+                                return;
+                            }
+                        }
+
+                        animationTimer.Stop();
+                        ShowTestResults();
+                    }
+                    else
+                    {
+                        int nextBarrel = barrelsToTest[currentMouse][currentBarrelPos];
+                        startP = mouse.Location;
+                        endP = barrels[nextBarrel].Location;
+                        endP.Offset(barrels[nextBarrel].Width / 2 - mouse.Width / 2,
+                                   barrels[nextBarrel].Height / 2 - mouse.Height / 2);
+                        goToBarrel = true;
+                        animStep = 0;
+                    }
+                }
+            }
+        }
+
+        private void StartAnimationForMouse(int mouseIndex)
+        {
+            if (barrelsToTest[mouseIndex].Count == 0)
+            {
+                for (int m = mouseIndex + 1; m < 4; m++)
+                {
+                    if (barrelsToTest[m].Count > 0)
+                    {
+                        StartAnimationForMouse(m);
+                        return;
+                    }
+                }
+                ShowTestResults();
+                return;
+            }
+
+            currentMouse = mouseIndex;
+            currentBarrelPos = 0;
+            Button mouse = miceButtons[mouseIndex];
+            startP = mouse.Location;
+            int firstBarrel = barrelsToTest[mouseIndex][0];
+            endP = barrels[firstBarrel].Location;
+            endP.Offset(barrels[firstBarrel].Width / 2 - mouse.Width / 2,
+                       barrels[firstBarrel].Height / 2 - mouse.Height / 2);
+            goToBarrel = true;
+            animStep = 0;
+            animationTimer.Start();
+        }
+
+        private void NewGame()
         {
             Random rnd = new Random();
             poisonedBarrel = rnd.Next(0, 16);
 
-            // Очищаем тесты
             for (int m = 0; m < 4; m++)
                 for (int b = 0; b < 16; b++)
                     tests[m, b] = false;
 
-            // Сбрасываем цвет всех бочек
-            Button[] barrels = { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8,
-                                 btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16 };
             foreach (Button btn in barrels)
-                btn.BackColor = Color.LightGray;
+                btn.BackColor = SystemColors.Control;
 
-            // Сбрасываем мышек
-            Button[] mice = { btnMouse1, btnMouse2, btnMouse3, btnMouse4 };
-            foreach (Button btn in mice)
+            for (int i = 0; i < 4; i++)
             {
-                btn.BackColor = Color.White;
-                btn.Text = "🐭";
+                miceButtons[i].Text = "🐭";
+                barrelsToTest[i].Clear();
             }
 
             gameActive = true;
+            testsCompleted = false;
             selectedMouse = 0;
-            btnMouse1.BackColor = Color.LightGreen;
-            lblStatus.Text = "Новая игра! Выбери мышку и отметь бочки (зелёные).";
+            lblStatus.Text = "Выбери мышку и отметь бочки. Затем нажми 'Угадать бочку'.";
         }
 
         private void MouseClick(object sender, EventArgs e)
         {
-            Button clicked = sender as Button;
-            if (clicked == btnMouse1) selectedMouse = 0;
-            if (clicked == btnMouse2) selectedMouse = 1;
-            if (clicked == btnMouse3) selectedMouse = 2;
-            if (clicked == btnMouse4) selectedMouse = 3;
+            if (!gameActive || testsCompleted)
+            {
+                lblStatus.Text = "Нажми 'Новая игра'.";
+                return;
+            }
 
-            Button[] mice = { btnMouse1, btnMouse2, btnMouse3, btnMouse4 };
-            for (int i = 0; i < 4; i++)
-                mice[i].BackColor = (i == selectedMouse) ? Color.LightGreen : Color.White;
+            if (sender == btnMouse1) selectedMouse = 0;
+            if (sender == btnMouse2) selectedMouse = 1;
+            if (sender == btnMouse3) selectedMouse = 2;
+            if (sender == btnMouse4) selectedMouse = 3;
 
-            lblStatus.Text = "Выбрана мышка " + (selectedMouse + 1);
+            lblStatus.Text = $"Выбрана мышка {selectedMouse + 1}. Отметь бочки для неё.";
         }
 
         private void BarrelClick(object sender, EventArgs e)
         {
-            if (!gameActive)
+            if (!gameActive || testsCompleted)
             {
-                lblStatus.Text = "Игра окончена. Нажми 'Новая игра'.";
+                lblStatus.Text = "Нажми 'Новая игра'.";
                 return;
             }
 
             Button barrel = sender as Button;
             int barrelNum = int.Parse(barrel.Text);
 
+            bool canTest = false;
+            if (selectedMouse == 0 && barrelNum < 4) canTest = true;
+            if (selectedMouse == 1 && barrelNum >= 4 && barrelNum < 8) canTest = true;
+            if (selectedMouse == 2 && barrelNum >= 8 && barrelNum < 12) canTest = true;
+            if (selectedMouse == 3 && barrelNum >= 12) canTest = true;
+
+            if (!canTest)
+            {
+                lblStatus.Text = $"Мышка {selectedMouse + 1} пробует только бочки {GetRange(selectedMouse)}!";
+                return;
+            }
+
             tests[selectedMouse, barrelNum] = !tests[selectedMouse, barrelNum];
 
             if (tests[selectedMouse, barrelNum])
                 barrel.BackColor = Color.LightGreen;
             else
-                barrel.BackColor = Color.LightGray;
+                barrel.BackColor = SystemColors.Control;
+
+            int count = 0;
+            for (int b = 0; b < 16; b++)
+                if (tests[selectedMouse, b]) count++;
+            lblStatus.Text = $"Мышка {selectedMouse + 1} пробует {count} бочeк.";
+        }
+
+        private string GetRange(int mouse)
+        {
+            if (mouse == 0) return "0-3";
+            if (mouse == 1) return "4-7";
+            if (mouse == 2) return "8-11";
+            return "12-15";
         }
 
         private void btnCheckGuess_Click(object sender, EventArgs e)
@@ -104,8 +258,50 @@ namespace Game
                 return;
             }
 
-            // Проверяем кто умер
-            string testResult = "Результаты:\n";
+            if (!testsCompleted)
+            {
+                for (int m = 0; m < 4; m++)
+                {
+                    barrelsToTest[m].Clear();
+                    for (int b = 0; b < 16; b++)
+                    {
+                        if (tests[m, b])
+                            barrelsToTest[m].Add(b);
+                    }
+                }
+
+                bool anyTest = false;
+                for (int m = 0; m < 4; m++)
+                    if (barrelsToTest[m].Count > 0) anyTest = true;
+
+                if (!anyTest)
+                {
+                    MessageBox.Show("Отметь бочки для мышек!");
+                    return;
+                }
+
+                testsCompleted = true;
+                btnCheckGuess.Enabled = false;
+                btnNewGame.Enabled = false;
+                lblStatus.Text = "Мышки бегут к бочкам! 🐭";
+
+                for (int m = 0; m < 4; m++)
+                {
+                    if (barrelsToTest[m].Count > 0)
+                    {
+                        StartAnimationForMouse(m);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                AskForGuess();
+            }
+        }
+
+        private void ShowTestResults()
+        {
             for (int m = 0; m < 4; m++)
             {
                 bool died = false;
@@ -118,51 +314,66 @@ namespace Game
                     }
                 }
                 miceAlive[m] = !died;
-                testResult += $"Мышка {m + 1}: {(miceAlive[m] ? "Жива 🐭" : "Умерла 💀")}\n";
 
-                // Меняем внешний вид мышки
-                Button[] mice = { btnMouse1, btnMouse2, btnMouse3, btnMouse4 };
                 if (!miceAlive[m])
-                {
-                    mice[m].BackColor = Color.Red;
-                    mice[m].Text = "💀";
-                }
+                    miceButtons[m].Text = "💀";
+                else
+                    miceButtons[m].Text = "🐭";
             }
 
-            MessageBox.Show(testResult, "Результаты тестов");
+            string result = "РЕЗУЛЬТАТЫ ТЕСТОВ:\n\n";
+            for (int m = 0; m < 4; m++)
+            {
+                result += $"Мышка {m + 1} ({GetRange(m)}): {(miceAlive[m] ? "ЖИВА" : "УМЕРЛА")}\n";
+            }
+            result += "\nЕсли мышка умерла - отравленная бочка в её группе!";
 
-            // ПРОСТОЙ ВВОД ЧИСЛА
-            string input = "";
+            MessageBox.Show(result, "Результаты");
+
+            btnCheckGuess.Text = "Ввести ответ";
+            btnCheckGuess.Enabled = true;
+            btnNewGame.Enabled = true;
+            lblStatus.Text = "Введи номер отравленной бочки.";
+        }
+
+        private void AskForGuess()
+        {
             Form prompt = new Form()
             {
-                Width = 300,
-                Height = 150,
+                Width = 350,
+                Height = 180,
                 Text = "Твоя догадка",
-                StartPosition = FormStartPosition.CenterParent
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog
             };
 
-            Label textLabel = new Label() { Left = 20, Top = 20, Text = "Номер бочки (0-15):" };
-            TextBox textBox = new TextBox() { Left = 20, Top = 45, Width = 240 };
-            Button confirmation = new Button() { Text = "OK", Left = 110, Width = 80, Top = 75, DialogResult = DialogResult.OK };
-            confirmation.Click += (sender2, e2) => { prompt.Close(); };
+            string hint = "Отравленная бочка в группе УМЕРШЕЙ мышки!\n\nВведи номер (0-15):";
 
-            prompt.Controls.Add(textLabel);
+            Label label = new Label() { Left = 20, Top = 20, Text = hint, Width = 300, Height = 60 };
+            TextBox textBox = new TextBox() { Left = 20, Top = 90, Width = 200 };
+            Button ok = new Button() { Text = "Угадать!", Left = 230, Top = 88, Width = 80, DialogResult = DialogResult.OK };
+
+            prompt.Controls.Add(label);
             prompt.Controls.Add(textBox);
-            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(ok);
 
-            prompt.ShowDialog();
-            input = textBox.Text;
-
-            int guess;
-            if (!int.TryParse(input, out guess) || guess < 0 || guess > 15)
+            if (prompt.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Введи число от 0 до 15!");
-                return;
-            }
+                int guess;
+                if (!int.TryParse(textBox.Text, out guess) || guess < 0 || guess > 15)
+                {
+                    MessageBox.Show("Введи число от 0 до 15!");
+                    return;
+                }
 
+                CheckGuess(guess);
+            }
+        }
+
+        private void CheckGuess(int guess)
+        {
             bool win = (guess == poisonedBarrel);
 
-            // Сохраняем результат
             GameResult res = new GameResult();
             res.PlayerName = player;
             res.Date = DateTime.Now;
@@ -174,17 +385,19 @@ namespace Game
             if (win)
             {
                 lblStatus.Text = $"ПОБЕДА! Отравлена бочка {poisonedBarrel}";
-                MessageBox.Show($"Поздравляю! Бочка {poisonedBarrel} была отравлена!");
+                MessageBox.Show($"ПОБЕДА! Бочка {poisonedBarrel} была отравлена!", "Победа!");
             }
             else
             {
-                lblStatus.Text = $"ПРОИГРЫШ! Отравлена бочка {poisonedBarrel}, а ты назвал {guess}";
-                MessageBox.Show($"Не угадал! Отравлена бочка {poisonedBarrel}");
+                lblStatus.Text = $"ПРОИГРЫШ! Отравлена бочка {poisonedBarrel}";
+                MessageBox.Show($"Проигрыш! Отравлена бочка {poisonedBarrel}, ты назвал {guess}", "Проигрыш");
             }
 
             gameActive = false;
+            btnCheckGuess.Text = "Угадать бочку";
         }
-        void SaveResult(GameResult res)
+
+        private void SaveResult(GameResult res)
         {
             List<GameResult> all = new List<GameResult>();
             if (File.Exists("results.bin"))
@@ -199,7 +412,7 @@ namespace Game
                 bf2.Serialize(fs, all);
         }
 
-        void LoadResults()
+        private void LoadResults()
         {
             if (File.Exists("results.bin"))
             {
@@ -216,19 +429,47 @@ namespace Game
 
         private void btnNewGame_Click(object sender, EventArgs e)
         {
+            animationTimer.Stop();
+            currentMouse = -1;
             NewGame();
+            btnCheckGuess.Text = "Угадать бочку";
+            btnCheckGuess.Enabled = true;
+            btnNewGame.Enabled = true;
+            testsCompleted = false;
         }
 
         private void показатьРезультатыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string text = "Твои результаты:\n\n";
-            foreach (var r in results)
-                text += r.ToString() + "\n";
-
+            string text = "ТВОИ РЕЗУЛЬТАТЫ:\n\n";
             if (results.Count == 0)
-                text = "У тебя пока нет результатов!";
-
+                text = "Нет результатов!";
+            else
+            {
+                int wins = 0;
+                foreach (var r in results)
+                {
+                    if (r.Win) wins++;
+                    text += r.ToString() + "\n";
+                }
+                text += $"\nПобед: {wins} из {results.Count}";
+            }
             MessageBox.Show(text, "Результаты");
+        }
+
+        private void правилаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "ПРАВИЛА:\n\n" +
+                "Мышка 1 → бочки 0-3\n" +
+                "Мышка 2 → бочки 4-7\n" +
+                "Мышка 3 → бочки 8-11\n" +
+                "Мышка 4 → бочки 12-15\n\n" +
+                "1. Выбери мышку\n" +
+                "2. Отметь бочки (зелёные)\n" +
+                "3. Нажми 'Угадать бочку'\n" +
+                "4. Смотри анимацию\n" +
+                "5. Угадай отравленную бочку",
+                "Правила");
         }
 
         private void цветБочекToolStripMenuItem_Click(object sender, EventArgs e)
@@ -239,36 +480,19 @@ namespace Game
                 Button[] barrels = { btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8,
                                      btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16 };
                 foreach (Button btn in barrels)
-                    if (btn.BackColor != Color.LightGreen)
+                {
+                    if (btn.BackColor != Color.LightGreen && btn.BackColor != Color.Orange)
                         btn.BackColor = cd.Color;
+                }
             }
-        }
-
-        private void правилаToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("4 мышки пробуют вино из отмеченных бочек. Угадай отравленную!");
         }
 
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            animationTimer.Stop();
             Form1 main = new Form1();
             main.Show();
             this.Close();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 
@@ -283,12 +507,7 @@ namespace Game
 
         public override string ToString()
         {
-            return $"{Date:dd.MM.yyyy HH:mm} - {(Win ? "ВЫИГРЫШ" : "ПРОИГРЫШ")} (было {PoisonedBarrel}, ответил {GuessedBarrel})";
+            return $"{Date:dd.MM.yyyy HH:mm} - {(Win ? "ВЫИГРЫШ" : "ПРОИГРЫШ")} (отравлена {PoisonedBarrel})";
         }
     }
 }
-
-
-
-
-    
